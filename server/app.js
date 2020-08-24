@@ -2,8 +2,6 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const path = require('path');
-const url = require('url');
-const querystring = require('querystring');
 
 //serve static build
 app.use('/', express.static(path.join(__dirname, '../tic-tac/build')))
@@ -13,7 +11,6 @@ app.use(express.json());
 app.get('/api/tickets', (req, res) => {
     const data = fs.readFileSync('./data.json');
     let tickets = JSON.parse(data);
-    console.log(tickets.length);
     let searchText  = req.query.searchText;
     if(searchText) {
         const filteredTickets = tickets.filter(input => {
@@ -21,23 +18,33 @@ app.get('/api/tickets', (req, res) => {
         })
         res.send((filteredTickets));
     } else {
-        console.log(searchText);
         res.send((tickets));
     }
   });
 
 //create
-
-
-  app.post('api/tickets/${ticketId}/undone', (req, res) => {
-    const data = fs.readFileSync('./records.json');
+app.post('/api/tickets/:ticketId/done', (req, res) => {
+    const data = fs.readFileSync('./data.json');
     let tickets = JSON.parse(data);
-    tickets.find
-    const newWinner = (req.body);
-    records.push(newWinner);
-    const info = JSON.stringify(records, null, 2);
-    fs.writeFile('./records.json', info, () => console.log("file updated"));
-    res.send(newWinner);
+    const foundTicket = tickets.findIndex(id => {
+       return id.id === req.params.ticketId;
+    })
+    tickets[foundTicket].done = true;
+    const info = JSON.stringify(tickets, null, 2);
+    fs.writeFile('./data.json', info, () => console.log("file updated"));
+    res.send(tickets[foundTicket]);
   })
+
+app.post('/api/tickets/:ticketId/undone', (req, res) => {
+  const data = fs.readFileSync('./data.json');
+  let tickets = JSON.parse(data);
+  const foundTicket = tickets.findIndex(id => {
+     return id.id === req.params.ticketId;
+  })
+  tickets[foundTicket].done = false;
+  const info = JSON.stringify(tickets, null, 2);
+  fs.writeFile('./data.json', info, () => console.log("file updated"));
+  res.send(tickets[foundTicket]);
+})
 
 module.exports = app;
