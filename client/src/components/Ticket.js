@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React from 'react';
+import '.././styling/Ticket.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -24,45 +24,34 @@ const useStyles = makeStyles({
   },
 });
 
-function Tickets() {
-    const [tickets, setTicket] = useState();
 
+function Tickets({ticket, hideOnClick}) {
     const classes = useStyles();
-
-    useEffect(()=>{
-        (async () => {
-          try{
-            const { data } = await axios.get('/api/tickets');
-            const showedticket = data.map(i => 
-              <div key={i.id} className='ticket'>
-              <Card className={classes.root}>
-        <CardContent>
-          <Typography variant="h5" component="h2">
-          {i.title}
-          </Typography>
-          <Typography variant="body2" component="p">
-          {i.content}
-          </Typography>
-        </CardContent>
-        <CardActions>
-        <span>{i.userEmail}</span><span> | {i.creationTime}</span>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
-          </div>
-            );
-            setTicket(showedticket);
-          }catch(error) {
-            alert(error);
-          }
-          })()
-      },[])
-
-
+    function changeTheDate(theDate) {
+      const current = new Date(theDate)
+      const timestring = (current.getDay() + 1) + '/' + (current.getMonth() + 1) + '/' + current.getFullYear() + ' ' + current.toLocaleTimeString();
+      return timestring;
+    }
     return (
-      <div>
-        {tickets}
-      </div>
+<div id={ticket.id} key={ticket.id} className='ticket'>
+<Card className={classes.root}>
+  <button className="hideTicketButton" onClick={() => hideOnClick(ticket.id)}>Hide</button>
+<CardContent>
+  <Typography variant="h5" component="h2">
+  {ticket.title}
+  </Typography>
+  <Typography variant="body2" component="p">
+  {ticket.content}
+  </Typography>
+</CardContent>
+<CardActions className="lowerBar">
+<span>by {ticket.userEmail} | {changeTheDate(ticket.creationTime)} </span>    
+      <span>{ticket.labels ? (ticket.labels).map(element => {
+        return  <Button style={{textTransform:"none"}} className="label" size="small">{element}</Button> }) : null}
+        </span>
+</CardActions>
+</Card>
+  </div>
     )
 }
 
