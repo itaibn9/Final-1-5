@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import '.././styling/App.css';
-
+import Tickets from './Ticket';
 function App() {
   return (
     <main>
       <title>Tickets Manager</title>
-      <h1>Hello</h1>
+      <Tickets className='ticket'/>
     </main>
   );
 }
