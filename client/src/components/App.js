@@ -8,62 +8,46 @@ function App() {
   const [counter, setCounter] = useState(0);
   const [numOfTickets, setNumOfTickets] = useState(0);
   const [callrestore, setCallrestore] = useState(0);
-  const hideTheTicket = (hideTarget) => {
+  const hideTheTicket = () => {
     setCounter(counter + 1);
-    const newArr = tickets.slice();
-    newArr.forEach(i => {
-      if(i.id === hideTarget){
-        i.hidden = true;
-        setTickets(newArr);
-      }
-    })
   }
-  const filterBySearch = (searchInput) => {
-    (async () => {
+  const filterBySearch = async (title) => {
       try{
-        setNumOfTickets(0);
-        let countShowTicket = 0
-        const { data } = await axios.get(`/api/tickets?searchText=${searchInput}`);
-        data.forEach(i => countShowTicket++)
-        setNumOfTickets(countShowTicket)
-        setTickets(data);
+        const data = await axios.get(`/api/tickets?searchText=${title}`);
+        setTickets(data.data);
+        setNumOfTickets(data.data.length)
       } catch(error) {
-         alert(error);
+         console.log(error);
       }
-      })()
   }
   useEffect(()=>{
     (async () => {
       try{
-        let countShowTicket = 0
         const { data } = await axios.get(`/api/tickets`);
-        data.forEach(i => countShowTicket++)
-        setNumOfTickets(countShowTicket)
+        setNumOfTickets(data.length);
         setTickets(data);
       } catch(error) {
-        alert(error);
+        console.log(error);
       }
     })()
   },[])
   const restoreHiddenTickets = () => {
     setCounter(0);
-    filterBySearch('');
     setCallrestore(callrestore + 1);
       }
-  const filteredTicketList = tickets.filter(ticket => !ticket.hidden);
   return (
     <main>
       <header>
       <h1>My Ticket Manager</h1>
       </header>
       <div id="searchInput">
-  <div> {numOfTickets} results {counter ? (<span>(Hidden tickets: <span id="hideTicketsCounter">
+  <div> {numOfTickets} results {counter > 0 ? (<span>(Hidden tickets: <span id="hideTicketsCounter">
         {counter}</span><b> - </b>
         <button id="restoreHideTickets" onClick={restoreHiddenTickets}>restore</button>)</span>): ''} </div>
         <Search onchange={filterBySearch}/>
       </div>
-      {filteredTicketList.map(i => 
-          <Ticket ticket={i} hideOnClick={hideTheTicket}/> 
+      {tickets.map(i => 
+          <Ticket ticket={i} hideOnClick={hideTheTicket} callRestore={callrestore}/> 
         )}
     </main>
   );
