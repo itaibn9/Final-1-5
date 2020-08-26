@@ -63,6 +63,7 @@ function Tickets({ ticket, hideOnClick, callRestore }) {
             {ticket.userEmail}
             {' '}
             |
+            {' '}
             {changeTheDate(ticket.creationTime)}
           </span>
           <span>

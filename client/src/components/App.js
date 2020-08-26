@@ -14,7 +14,11 @@ function App() {
   };
   const filterBySearch = async (title) => {
     try {
-      const data = await axios.get(`/api/tickets?searchText=${title}`);
+      const data = await axios.get(`/api/tickets`, {
+        param: {
+          searchText: title
+        }
+      });
       setTickets(data.data);
       setNumOfTickets(data.data.length);
     } catch (error) {
@@ -42,7 +46,7 @@ function App() {
         <h1>My Ticket Manager</h1>
       </header>
       <div id="searchInput">
-        <div>
+        <i>
           {' '}
           {numOfTickets}
           {' '}
@@ -60,7 +64,7 @@ function App() {
             </span>
           ) : ''}
           {' '}
-        </div>
+        </i>
         <Search onchange={filterBySearch} />
       </div>
       {tickets.map((i) => <Ticket ticket={i} hideOnClick={hideTheTicket} callRestore={callrestore} />)}
