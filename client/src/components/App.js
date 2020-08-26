@@ -7,6 +7,7 @@ function App() {
   const [tickets, setTickets] = useState([]);
   const [counter, setCounter] = useState(0);
   const [numOfTickets, setNumOfTickets] = useState(0);
+  const [callrestore, setCallrestore] = useState(0);
   const hideTheTicket = (hideTarget) => {
     setCounter(counter + 1);
     const newArr = tickets.slice();
@@ -31,7 +32,6 @@ function App() {
       }
       })()
   }
-  
   useEffect(()=>{
     (async () => {
       try{
@@ -48,8 +48,8 @@ function App() {
   const restoreHiddenTickets = () => {
     setCounter(0);
     filterBySearch('');
+    setCallrestore(callrestore + 1);
       }
-
   const filteredTicketList = tickets.filter(ticket => !ticket.hidden);
   return (
     <main>
@@ -57,7 +57,8 @@ function App() {
       <h1>My Ticket Manager</h1>
       </header>
       <div id="searchInput">
-  <div className="hideTicketsCounter"> {numOfTickets} results {counter ? (<span>(Hidden tickets: {counter}<b> - </b>
+  <div> {numOfTickets} results {counter ? (<span>(Hidden tickets: <span id="hideTicketsCounter">
+        {counter}</span><b> - </b>
         <button id="restoreHideTickets" onClick={restoreHiddenTickets}>restore</button>)</span>): ''} </div>
         <Search onchange={filterBySearch}/>
       </div>
