@@ -25,6 +25,3 @@
     .hideTicketButton:hover{
         background-color: rgba(0, 128, 0, 0.1);
     }
-    .hiddenTicket{
-        display: none;
-    }

@@ -12,14 +12,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Search({onchange}) {
     const classes = useStyles();
-    const handleChange = (e) => {
-      onchange(e.target.value)
-    }
-    
+
     return (
-        // <form className={classes.root} noValidate autoComplete="off">
-            <TextField id="searchInput" label="Filter list" variant="outlined" onChange={event => handleChange(event) }/>
-        // </form>
+        <form  className={classes.root} noValidate autoComplete="off">
+            <TextField id="searchInput" label="Filter list" variant="outlined"
+             onChange={event => onchange(event.target.value)}/>
+        </form>
     )
 }
 
