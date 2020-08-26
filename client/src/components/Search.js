@@ -14,7 +14,7 @@ function Search({onchange}) {
     const classes = useStyles();
 
     return (
-        <form className={classes.root} noValidate autoComplete="off">
+        <form  className={classes.root} noValidate autoComplete="off">
             <TextField id="searchInput" label="Filter list" variant="outlined"
              onChange={event => onchange(event.target.value)}/>
         </form>
