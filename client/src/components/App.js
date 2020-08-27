@@ -14,11 +14,7 @@ function App() {
   };
   const filterBySearch = async (title) => {
     try {
-      const data = await axios.get(`/api/tickets`, {
-        param: {
-          searchText: title
-        }
-      });
+      const data = await axios.get(`/api/tickets?searchText=${title}`);
       setTickets(data.data);
       setNumOfTickets(data.data.length);
     } catch (error) {
@@ -29,6 +25,7 @@ function App() {
     (async () => {
       try {
         const { data } = await axios.get('/api/tickets');
+        const content = data[0].content.slice(0,100)
         setNumOfTickets(data.length);
         setTickets(data);
       } catch (error) {
@@ -45,15 +42,17 @@ function App() {
       <header>
         <h1>My Ticket Manager</h1>
       </header>
-      <div id="searchInput">
-        <i>
+      <div className="infoOnTickets">
+        <div>
+        <h3>
           {' '}
           {numOfTickets}
           {' '}
           results
           {' '}
+          </h3>
           {counter > 0 ? (
-            <span>
+            <i>
               (Hidden tickets:
               <span id="hideTicketsCounter">
                 {counter}
@@ -61,10 +60,10 @@ function App() {
               <b> - </b>
               <button id="restoreHideTickets" onClick={restoreHiddenTickets}>restore</button>
               )
-            </span>
+            </i>
           ) : ''}
           {' '}
-        </i>
+          </div>
         <Search onchange={filterBySearch} />
       </div>
       {tickets.map((i) => <Ticket ticket={i} hideOnClick={hideTheTicket} callRestore={callrestore} />)}
