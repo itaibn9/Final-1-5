@@ -57,7 +57,6 @@ Use a popular style guide - Airbnb
 1. Invite `Cyber4sPopo` as a [collaborator](https://docs.github.com/en/github/setting-up-and-managing-your-github-user-account/inviting-collaborators-to-a-personal-repository) to your repo 👮
 1. Create a Pull Request from the new brunch into master in your duplicated repository
 
-
 ## Grading policy
 * Your project will be graded by the number of automatic tests you pass
 * Visual creativity, use css to make this app look awesome 💅🏿
