@@ -66,7 +66,9 @@ function App() {
           </div>
         <Search onchange={filterBySearch} />
       </div>
+      <div className={'container'}>
       {tickets.map((i) => <Ticket ticket={i} hideOnClick={hideTheTicket} callRestore={callrestore} />)}
+      </div>
     </main>
   );
 }

@@ -28,3 +28,20 @@
     .hiddenTicket{
         display: none;
     }
+    .contentReducer{
+        border: none;
+        background-color: white;
+        color: black;
+    }
+    .contentReducer:hover{
+        background-color: thistle;
+    }
+    .buttonSeeMore{
+        display: none;
+    }
+    .content{
+        color:gray;
+    }
+    .fullContent{
+        color:black;
+    }

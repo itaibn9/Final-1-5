@@ -19,3 +19,7 @@ header{
     background-color: lightcyan;
     color: blue;
 }
+.container{
+    display: grid;
+  grid-template-columns: auto auto;
+}

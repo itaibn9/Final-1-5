@@ -26,6 +26,9 @@ const useStyles = makeStyles({
 
 function Tickets({ ticket, hideOnClick, callRestore }) {
   const [classTicket, setClassTicket] = useState('ticket');
+  const [classContentLength, setClassContentLength] = useState('contentReducer');
+  const [contentLength, setContentLength] = useState(ticket.content.slice(0,100) + '...');
+  const [classContent, setClassContent] = useState('content');
   const classes = useStyles();
   function changeTheDate(theDate) {
     const current = new Date(theDate);
@@ -45,16 +48,26 @@ function Tickets({ ticket, hideOnClick, callRestore }) {
           onClick={() => {
             setClassTicket('hiddenTicket');
             hideOnClick();
-          }}
-        >
+          }}>
           Hide
         </button>
         <CardContent>
           <Typography variant="h5" component="h2">
             {ticket.title}
           </Typography>
-          <Typography variant="body2" component="p">
-            {ticket.content}
+          <Typography variant="body2" component="p" >
+            <div className={classContent} onClick={() => {
+            setClassContent('content');
+            setClassContentLength('contentReducer')
+            setContentLength(ticket.content.slice(0,100));
+          }} >
+            {contentLength + ' '}
+            </div>
+            <button className={classContentLength} onClick={() => {
+              setClassContent('fullContent');
+              setClassContentLength('buttonSeeMore')
+              setContentLength(ticket.content)
+            }} >See more</button>
           </Typography>
         </CardContent>
         <CardActions className="lowerBar">
