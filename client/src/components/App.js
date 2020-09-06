@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import '../styling/App.css';
 import axios from 'axios';
 import Ticket from './Ticket';
@@ -9,14 +9,36 @@ function App() {
   const [counter, setCounter] = useState(0);
   const [numOfTickets, setNumOfTickets] = useState(0);
   const [callrestore, setCallrestore] = useState(0);
-  const hideTheTicket = () => {
-    setCounter(counter + 1);
-  };
+  const [searchMethod, setSearchMethod] = useState("dsa");
+  const onSearchMethodChange = useCallback(
+    (event) => {
+      console.log(event);
+      setSearchMethod(event.target.value)
+    },[])
+  const hideTheTicket = useCallback(() => {
+    console.log("rendered ticket");
+    setCounter((prevCounter) => prevCounter + 1);
+  }, []);
+  const changeTheDate = useCallback((theDate) => {
+    console.log("##########");
+    const current = new Date(theDate);
+    const timestring = `${current.getDay() + 1}/${current.getMonth() + 1}/${current.getFullYear()}
+     ${current.toLocaleTimeString()}`;
+    return timestring;
+  },[]);
+  
   const filterBySearch = async (title) => {
     try {
-      const data = await axios.get(`/api/tickets?searchText=${title}`);
-      setTickets(data.data);
-      setNumOfTickets(data.data.length);
+      if( searchMethod === "Title") {
+        const data = await axios.get(`/api/tickets?searchText=${title}`) ;
+        setTickets(data.data);
+        setNumOfTickets(data.data.length);
+      } else {
+        const data = await axios.get(`/api/tickets/email?searchText=${title}`);
+        setTickets(data.data);
+        setNumOfTickets(data.data.length);
+      }
+      
     } catch (error) {
       console.log(error);
     }
@@ -63,10 +85,10 @@ function App() {
           ) : ''}
           {' '}
           </div>
-        <Search onchange={filterBySearch} />
+        <Search onchange={filterBySearch} onSearchMethodChange={onSearchMethodChange} />
       </div>
       <div className={'container'}>
-      {tickets.map((i) => <Ticket ticket={i} hideOnClick={hideTheTicket} callRestore={callrestore} />)}
+      {tickets.map((i) => <Ticket ticket={i} changeTheDate={changeTheDate} hideOnClick={hideTheTicket} callRestore={callrestore} />)}
       </div>
     </main>
   );

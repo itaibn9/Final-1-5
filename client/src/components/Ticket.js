@@ -23,18 +23,15 @@ const useStyles = makeStyles({
   },
 });
 
-function Tickets({ ticket, hideOnClick, callRestore }) {
+function Tickets({ ticket, changeTheDate, hideOnClick, callRestore }) {
   const [classTicket, setClassTicket] = useState('ticket');
   const [classContentLength, setClassContentLength] = useState('contentReducer');
   const [contentLength, setContentLength] = useState(ticket.content.slice(0,100) + '...');
   const [classContent, setClassContent] = useState('content');
   const classes = useStyles();
-  function changeTheDate(theDate) {
-    const current = new Date(theDate);
-    const timestring = `${current.getDay() + 1}/${current.getMonth() + 1}/${current.getFullYear()}
-     ${current.toLocaleTimeString()}`;
-    return timestring;
-  }
+
+
+  
   useEffect(() => {
     setClassTicket('ticket');
   }, [callRestore]);
@@ -55,7 +52,7 @@ function Tickets({ ticket, hideOnClick, callRestore }) {
           <Typography variant="h5" component="h2">
             {ticket.title}
           </Typography>
-          <Typography variant="body2" component="p" >
+          <Typography variant="body2" component="div" >
             <div className={classContent} onClick={() => {
             setClassContent('content');
             setClassContentLength('contentReducer')
@@ -87,7 +84,6 @@ function Tickets({ ticket, hideOnClick, callRestore }) {
                 size="small"
               >
                 {element}
-                {"  "}
               </span>
             )) : null}
           </span>

@@ -21,6 +21,19 @@ app.get('/api/tickets', (req, res) => {
   }
 });
 
+//Search by Email
+app.get('/api/tickets/email', (req, res) => {
+  const data = fs.readFileSync('./data.json');
+  const tickets = JSON.parse(data);
+  const { searchText } = req.query;
+  if (searchText) {
+    const filteredTickets = tickets.filter((input) => input.userEmail.toLowerCase().includes(searchText.toLowerCase()));
+    res.send((filteredTickets));
+  } else {
+    res.send((tickets));
+  }
+});
+
 // create
 app.post('/api/tickets/:ticketId/done', (req, res) => {
   const data = fs.readFileSync('./data.json');
