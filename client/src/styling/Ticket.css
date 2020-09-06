@@ -19,7 +19,7 @@
         float: right;
       }
 
-      .ticket:hover .hideTicketButton{
+    .ticket:hover .hideTicketButton{
         color:black;
     }
     .hideTicketButton:hover{
@@ -44,4 +44,7 @@
     }
     .fullContent{
         color:black;
+    }
+    .label:hover{
+        background-color: thistle;
     }

@@ -18,7 +18,7 @@ function Search({ onchange }) {
   };
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <TextField id="searchInput" label="Filter list" variant="outlined" onChange={(event) => handleChange(event)} />
+      <TextField id="searchInput" label="Search tickets" variant="outlined" onChange={(event) => handleChange(event)} />
     </form>
   );
 }

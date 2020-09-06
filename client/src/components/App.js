@@ -25,7 +25,6 @@ function App() {
     (async () => {
       try {
         const { data } = await axios.get('/api/tickets');
-        const content = data[0].content.slice(0,100)
         setNumOfTickets(data.length);
         setTickets(data);
       } catch (error) {

@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -43,6 +42,7 @@ function Tickets({ ticket, hideOnClick, callRestore }) {
     <div id={ticket.id} key={ticket.id} className={classTicket}>
       <Card className={classes.root}>
         <button
+          style={{ cursor:'pointer', focus:'outline:none'}} 
           type="submit"
           className="hideTicketButton"
           onClick={() => {
@@ -81,13 +81,14 @@ function Tickets({ ticket, hideOnClick, callRestore }) {
           </span>
           <span>
             {ticket.labels ? (ticket.labels).map((element) => (
-              <Button
+              <span
                 style={{ textTransform: 'none' }}
                 className="label"
                 size="small"
               >
                 {element}
-              </Button>
+                {"  "}
+              </span>
             )) : null}
           </span>
         </CardActions>
