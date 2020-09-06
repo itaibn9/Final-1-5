@@ -78,13 +78,13 @@ function Tickets({ ticket, changeTheDate, hideOnClick, callRestore }) {
           </span>
           <span>
             {ticket.labels ? (ticket.labels).map((element) => (
-              <span
+              <i
                 style={{ textTransform: 'none' }}
                 className="label"
                 size="small"
               >
                 {element}
-              </span>
+              </i>
             )) : null}
           </span>
         </CardActions>

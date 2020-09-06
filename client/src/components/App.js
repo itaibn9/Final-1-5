@@ -9,12 +9,12 @@ function App() {
   const [counter, setCounter] = useState(0);
   const [numOfTickets, setNumOfTickets] = useState(0);
   const [callrestore, setCallrestore] = useState(0);
-  const [searchMethod, setSearchMethod] = useState("dsa");
-  const onSearchMethodChange = useCallback(
-    (event) => {
-      console.log(event);
-      setSearchMethod(event.target.value)
-    },[])
+  // const [searchMethod, setSearchMethod] = useState("dsa");
+  // const onSearchMethodChange = useCallback(
+  //   (event) => {
+  //     console.log(event);
+  //     setSearchMethod(event.target.value)
+  //   },[])
   const hideTheTicket = useCallback(() => {
     console.log("rendered ticket");
     setCounter((prevCounter) => prevCounter + 1);
@@ -29,16 +29,9 @@ function App() {
   
   const filterBySearch = async (title) => {
     try {
-      if( searchMethod === "Title") {
         const data = await axios.get(`/api/tickets?searchText=${title}`) ;
         setTickets(data.data);
         setNumOfTickets(data.data.length);
-      } else {
-        const data = await axios.get(`/api/tickets/email?searchText=${title}`);
-        setTickets(data.data);
-        setNumOfTickets(data.data.length);
-      }
-      
     } catch (error) {
       console.log(error);
     }
@@ -85,7 +78,7 @@ function App() {
           ) : ''}
           {' '}
           </div>
-        <Search onchange={filterBySearch} onSearchMethodChange={onSearchMethodChange} />
+        <Search onchange={filterBySearch}/>
       </div>
       <div className={'container'}>
       {tickets.map((i) => <Ticket ticket={i} changeTheDate={changeTheDate} hideOnClick={hideTheTicket} callRestore={callrestore} />)}
